@@ -25,7 +25,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
   void postImage(
     String uid,
     String username,
-    String ProfileImage,
+    String profileImage,
   ) async {
     try {
       setState(() {
@@ -36,7 +36,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
         _imageTOUpload!,
         uid,
         username,
-        ProfileImage,
+        profileImage,
       );
 
       if (res == 'Success') {
@@ -113,7 +113,6 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _descriptionController.dispose();
   }
