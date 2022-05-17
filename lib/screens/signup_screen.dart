@@ -6,6 +6,7 @@ import 'package:lost_pet/resources/auth_methods.dart';
 import 'package:lost_pet/responsive/mobile_layout.dart';
 import 'package:lost_pet/responsive/responsive_layout.dart';
 import 'package:lost_pet/responsive/web_layout.dart';
+import 'package:lost_pet/screens/login_screen.dart';
 import 'package:lost_pet/utilities/colors.dart';
 import 'package:lost_pet/utilities/utilities.dart';
 import 'package:lost_pet/widgets/text_field_input.dart';
@@ -39,6 +40,7 @@ class _SignupScreenState extends State<SignupScreen> {
     _emailController.dispose();
     _passwordController.dispose();
     _usernameController.dispose();
+    _profileImage = null;
     super.dispose();
   }
 
@@ -128,7 +130,6 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     defaultImage();
   }
@@ -137,6 +138,13 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => const LoginScreen()));
+          },
+        ),
         backgroundColor: Colors.transparent,
       ),
       body: SafeArea(
