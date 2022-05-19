@@ -7,6 +7,7 @@ class Post {
   final String uid;
   final String username;
   final String profileImage;
+  final String type;
   final datePosted;
 
   const Post({
@@ -17,6 +18,7 @@ class Post {
     required this.username,
     required this.profileImage,
     required this.datePosted,
+    required this.type,
   });
 
   Map<String, dynamic> toJson() => {
@@ -27,6 +29,7 @@ class Post {
         "username": username,
         "profileImage": profileImage,
         "datePosted": datePosted,
+        "type": type,
       };
 
   static Post fromJson(DocumentSnapshot snap) {
@@ -39,6 +42,7 @@ class Post {
       postId: jsonSnapshot["postId"],
       datePosted: jsonSnapshot["datePosted"],
       description: jsonSnapshot["description"],
+      type: jsonSnapshot["type"],
     );
   }
 }

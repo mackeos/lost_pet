@@ -21,6 +21,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
   Uint8List? _imageTOUpload;
   final TextEditingController _descriptionController = TextEditingController();
   bool _isLoading = false;
+  List<bool> _uploadTypeToggle = [true, false];
 
   void postImage(
     String uid,
@@ -37,6 +38,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
         uid,
         username,
         profileImage,
+        _uploadTypeToggle[0] ? "lost" : "found",
       );
 
       if (res == 'Success') {
@@ -158,28 +160,62 @@ class _AddPostScreenState extends State<AddPostScreen> {
             body: Column(
               children: [
                 _isLoading
-                    ? const LinearProgressIndicator()
-                    : const Padding(padding: EdgeInsets.only(top: 0)),
-                const Divider(),
+                    ? const LinearProgressIndicator(
+                        minHeight: 3.0,
+                      )
+                    : const SizedBox(
+                        height: 3.0,
+                      ),
+                SizedBox(
+                  height: 10,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     CircleAvatar(
                       backgroundImage: NetworkImage(
                         user.profileImage,
                       ),
                     ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      child: TextField(
-                        controller: _descriptionController,
-                        decoration: const InputDecoration(
-                          hintText: 'Enter your post description',
-                          border: InputBorder.none,
+                    const Text(
+                      'Upload Type',
+                    ),
+                    ToggleButtons(
+                      borderColor: primaryColor,
+                      borderRadius: BorderRadius.circular(50),
+                      borderWidth: 1,
+                      selectedColor: blueColor,
+                      hoverColor: blueColor,
+                      fillColor: primaryColor,
+                      children: const [
+                        Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Text(
+                            'Lost',
+                          ),
                         ),
-                        maxLines: 8,
-                      ),
+                        Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Text(
+                            'Found',
+                          ),
+                        ),
+                      ],
+                      isSelected: _uploadTypeToggle,
+                      onPressed: (int newIndex) {
+                        setState(() {
+                          for (int index = 0;
+                              index < _uploadTypeToggle.length;
+                              index++) {
+                            if (index == newIndex) {
+                              _uploadTypeToggle[index] = true;
+                            } else {
+                              _uploadTypeToggle[index] = false;
+                            }
+                          }
+                        });
+                      },
                     ),
                     SizedBox(
                       height: 45,
@@ -199,6 +235,23 @@ class _AddPostScreenState extends State<AddPostScreen> {
                       ),
                     )
                   ],
+                ),
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  child: TextField(
+                    controller: _descriptionController,
+                    decoration: const InputDecoration(
+                      hintText: 'Enter your post description',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      ),
+                    ),
+                    maxLength: 150,
+                    maxLines: 3,
+                  ),
+                ),
+                const Divider(
+                  color: primaryColor,
                 ),
               ],
             ),

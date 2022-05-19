@@ -14,6 +14,7 @@ class FirestoreMethods {
     String uid,
     String username,
     String profileImage,
+    String type,
   ) async {
     String res = "Something went wrong";
     try {
@@ -28,20 +29,12 @@ class FirestoreMethods {
         username: username,
         postId: postId,
         postUrl: photoUrl,
-        datePosted: DateTime.now().toString(),
+        datePosted: DateTime.now(),
         profileImage: profileImage,
+        type: type,
       );
 
-      _firestore
-          .collection(
-            'posts',
-          )
-          .doc(
-            postId,
-          )
-          .set(
-            post.toJson(),
-          );
+      _firestore.collection('posts').doc(postId).set(post.toJson());
       res = "Success";
     } catch (e) {
       print(e);
@@ -68,7 +61,7 @@ class FirestoreMethods {
           'uid': uid,
           'username': username,
           'profileImage': profileImage,
-          'datePosted': DateTime.now(),
+          'dateCom': DateTime.now(),
         });
       } else {
         res = "Comment cannot be empty";

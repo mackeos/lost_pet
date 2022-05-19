@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -15,6 +16,12 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
+    print(FirebaseFirestore.instance
+        .collection("posts")
+        .where("type", isEqualTo: "lost")
+        .orderBy("datePosted", descending: true)
+        .snapshots()
+        .first);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: mobileBackgroundColor,

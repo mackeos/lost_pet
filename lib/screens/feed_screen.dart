@@ -8,28 +8,68 @@ class FeedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: mobileBackgroundColor,
-        title: const Text("Feed"),
-      ),
-      body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection("posts").snapshots(),
-        builder: (context,
-            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.blue[900],
+          title: const Text("Feed"),
+          bottom: const TabBar(
+            tabs: [
+              Tab(
+                text: "Lost Pets",
+              ),
+              Tab(
+                text: "Found Pets",
+              ),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          children: [
+            StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection("posts")
+                  .where("type", isEqualTo: "lost")
+                  .orderBy("datePosted", descending: true)
+                  .snapshots(),
+              builder: (context,
+                  AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
 
-          return ListView.builder(
-            itemCount: snapshot.data!.docs.length,
-            itemBuilder: (context, index) => PostCard(
-              snap: snapshot.data!.docs[index].data(),
+                return ListView.builder(
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (context, index) =>
+                      PostCard(snap: snapshot.data!.docs[index].data()),
+                );
+              },
             ),
-          );
-        },
+            StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection("posts")
+                  .where("type", isEqualTo: "found")
+                  .snapshots(),
+              builder: (context,
+                  AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+
+                return ListView.builder(
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (context, index) =>
+                      PostCard(snap: snapshot.data!.docs[index].data()),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

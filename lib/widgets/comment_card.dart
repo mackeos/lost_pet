@@ -56,7 +56,7 @@ class _CommentCardState extends State<CommentCard> {
                     padding: const EdgeInsets.only(top: 5),
                     child: Text(
                       DateFormat.yMMMd()
-                          .format(widget.snap['datePosted'].toDate()),
+                          .format(widget.snap['dateCom'].toDate()),
                       style: TextStyle(
                         color: primaryColor,
                         fontSize: 12,

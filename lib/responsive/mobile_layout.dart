@@ -68,13 +68,13 @@ class _MobileLayoutState extends State<MobileLayout> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.chat_bubble,
+              Icons.message,
               color: _page == 3 ? primaryColor : secondaryColor,
             ),
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.person,
+              Icons.person_outline,
               color: _page == 4 ? primaryColor : secondaryColor,
             ),
           ),

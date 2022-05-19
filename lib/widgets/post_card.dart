@@ -137,9 +137,7 @@ class _PostCardState extends State<PostCard> {
                     const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                 child: Text(
                   DateFormat.yMMMMd().format(
-                    DateTime.parse(
-                      widget.snap['datePosted'],
-                    ),
+                    widget.snap["datePosted"].toDate(),
                   ),
                   style: TextStyle(
                     color: secondaryColor,
