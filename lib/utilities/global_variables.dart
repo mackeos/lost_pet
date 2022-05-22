@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lost_pet/screens/add_post_screen.dart';
 import 'package:lost_pet/screens/feed_screen.dart';
@@ -6,12 +7,14 @@ import 'package:lost_pet/screens/search_screen.dart';
 
 const webScreenSize = 600;
 
-const homeScreenPages = [
+List<Widget> homeScreenPages = [
   FeedScreen(),
   SearchScreen(),
   AddPostScreen(),
   Center(
     child: Text('Chat'),
   ),
-  ProfileScreen(),
+  ProfileScreen(
+    uid: FirebaseAuth.instance.currentUser!.uid,
+  ),
 ];

@@ -20,7 +20,7 @@ class User {
         "username": username,
         "uid": uid,
         "email": email,
-        "profile_image": profileImage,
+        "profileImage": profileImage,
         "followers": followers,
         "followings": followings,
       };
@@ -31,7 +31,7 @@ class User {
       username: jsonSnapshot["username"],
       uid: jsonSnapshot["uid"],
       email: jsonSnapshot["email"],
-      profileImage: jsonSnapshot["profile_image"],
+      profileImage: jsonSnapshot["profileImage"],
       followers: jsonSnapshot["followers"],
       followings: jsonSnapshot["followings"],
     );
