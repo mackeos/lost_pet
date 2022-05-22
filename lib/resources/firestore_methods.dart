@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:lost_pet/models/post.dart';
 import 'package:lost_pet/resources/storage_methods.dart';
 import 'package:uuid/uuid.dart';
@@ -15,6 +16,7 @@ class FirestoreMethods {
     String username,
     String profileImage,
     String type,
+    GeoPoint location,
   ) async {
     String res = "Something went wrong";
     try {
@@ -32,6 +34,7 @@ class FirestoreMethods {
         datePosted: DateTime.now(),
         profileImage: profileImage,
         type: type,
+        location: location,
       );
 
       _firestore.collection('posts').doc(postId).set(post.toJson());
@@ -80,5 +83,10 @@ class FirestoreMethods {
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  String getCurrentUID() {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    return uid;
   }
 }

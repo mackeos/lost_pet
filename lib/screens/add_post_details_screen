@@ -21,14 +21,15 @@ import 'package:latlng/latlng.dart';
 
 import '../models/user.dart';
 
-class AddPostScreen extends StatefulWidget {
-  const AddPostScreen({Key? key}) : super(key: key);
+class AddPostDetailsScreen extends StatefulWidget {
+  Uint8List? _imageTOUpload;
+  const AddPostDetailsScreen({Key? key}) : super(key: key);
 
   @override
-  State<AddPostScreen> createState() => _AddPostScreenState();
+  State<AddPostDetailsScreen> createState() => _AddPostDetailsScreenState();
 }
 
-class _AddPostScreenState extends State<AddPostScreen> {
+class _AddPostDetailsScreenState extends State<AddPostDetailsScreen> {
   Uint8List? _imageTOUpload;
   final TextEditingController _descriptionController = TextEditingController();
   bool _isLoading = false;

@@ -9,6 +9,7 @@ class Post {
   final String profileImage;
   final String type;
   final datePosted;
+  final GeoPoint location;
 
   const Post({
     required this.postId,
@@ -19,6 +20,7 @@ class Post {
     required this.profileImage,
     required this.datePosted,
     required this.type,
+    required this.location,
   });
 
   Map<String, dynamic> toJson() => {
@@ -30,6 +32,7 @@ class Post {
         "profileImage": profileImage,
         "datePosted": datePosted,
         "type": type,
+        "location": location,
       };
 
   static Post fromJson(DocumentSnapshot snap) {
@@ -43,6 +46,7 @@ class Post {
       datePosted: jsonSnapshot["datePosted"],
       description: jsonSnapshot["description"],
       type: jsonSnapshot["type"],
+      location: jsonSnapshot["location"],
     );
   }
 }

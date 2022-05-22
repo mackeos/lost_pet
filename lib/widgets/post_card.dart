@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lost_pet/resources/firestore_methods.dart';
 import 'package:lost_pet/screens/comments_screen.dart';
 import 'package:lost_pet/utilities/colors.dart';
 import 'package:lost_pet/utilities/utilities.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PostCard extends StatefulWidget {
   final snap;
@@ -19,6 +21,8 @@ class PostCard extends StatefulWidget {
 
 class _PostCardState extends State<PostCard> {
   int commentLength = 0;
+  bool _isExpanded = false;
+  bool _showPreview = false;
 
   @override
   void initState() {
@@ -44,12 +48,24 @@ class _PostCardState extends State<PostCard> {
     }
   }
 
+  static Future<void> openMap(String latitude, String longitude) async {
+    final Uri _googleMapUrl = Uri.parse(
+        'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude');
+    if (!await launchUrl(_googleMapUrl))
+      throw 'Could not launch $_googleMapUrl';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: mobileBackgroundColor,
       padding: const EdgeInsets.symmetric(
         vertical: 10,
+      ),
+      decoration: BoxDecoration(
+        color: mobileBackgroundColor,
+        border: Border.all(
+          color: Colors.blue,
+        ),
       ),
       child: Column(
         children: [
@@ -73,54 +89,76 @@ class _PostCardState extends State<PostCard> {
                     ),
                   ),
                 ),
-                IconButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => Dialog(
-                        child: ListView(
-                          padding: const EdgeInsets.symmetric(vertical: 5),
-                          shrinkWrap: true,
-                          children: [
-                            "Delete",
-                          ]
-                              .map(
-                                (e) => InkWell(
-                                  onTap: () async {
-                                    FirestoreMethods()
-                                        .deletePost(widget.snap["postId"]);
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 10),
-                                    child: Text(e),
-                                  ),
-                                ),
-                              )
-                              .toList(),
-                        ),
-                      ),
-                    );
-                  },
-                  icon: Icon(Icons.more_vert),
-                ),
+                FirebaseAuth.instance.currentUser!.uid == widget.snap["uid"]
+                    ? IconButton(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => Dialog(
+                              child: ListView(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 5),
+                                shrinkWrap: true,
+                                children: [
+                                  "Delete",
+                                ]
+                                    .map(
+                                      (e) => InkWell(
+                                        onTap: () async {
+                                          FirestoreMethods().deletePost(
+                                              widget.snap["postId"]);
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 10, vertical: 10),
+                                          child: Text(e),
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
+                            ),
+                          );
+                        },
+                        icon: Icon(Icons.more_vert),
+                      )
+                    : Container(),
               ],
             ),
           ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.4,
-            width: double.infinity,
-            child: Image(
-              image: NetworkImage(
-                widget.snap['postUrl'],
+          GestureDetector(
+            onLongPress: () {
+              setState(() {
+                _showPreview = true;
+              });
+            },
+            onLongPressEnd: (details) {
+              setState(() {
+                _showPreview = false;
+              });
+            },
+            child: SizedBox(
+              height: _showPreview
+                  ? null
+                  : MediaQuery.of(context).size.height * 0.4,
+              width: double.infinity,
+              child: Image(
+                image: NetworkImage(
+                  widget.snap['postUrl'],
+                ),
+                fit: BoxFit.cover,
               ),
-              fit: BoxFit.cover,
             ),
           ),
           Row(
             children: [
-              IconButton(onPressed: () {}, icon: Icon(Icons.map)),
+              IconButton(
+                  onPressed: () {
+                    openMap(widget.snap["location"].latitude.toString(),
+                        widget.snap["location"].longitude.toString());
+                  },
+                  icon: Icon(Icons.map)),
               IconButton(
                   onPressed: () => Navigator.of(context).push(
                         MaterialPageRoute(

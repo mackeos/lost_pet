@@ -6,15 +6,3 @@ import 'package:lost_pet/screens/profile_screen.dart';
 import 'package:lost_pet/screens/search_screen.dart';
 
 const webScreenSize = 600;
-
-List<Widget> homeScreenPages = [
-  FeedScreen(),
-  SearchScreen(),
-  AddPostScreen(),
-  Center(
-    child: Text('Chat'),
-  ),
-  ProfileScreen(
-    uid: FirebaseAuth.instance.currentUser!.uid,
-  ),
-];

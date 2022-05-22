@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:lost_pet/resources/auth_methods.dart';
 import 'package:lost_pet/screens/login_screen.dart';
 import 'package:lost_pet/utilities/colors.dart';
@@ -65,6 +63,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return isLoading
         ? Scaffold(
@@ -84,20 +88,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
               actions: <Widget>[
                 FirebaseAuth.instance.currentUser!.uid == widget.uid
                     ? IconButton(
-                        icon: Icon(Icons.exit_to_app),
+                        icon: const Icon(Icons.exit_to_app),
                         onPressed: () async {
                           await AuthMethods().signOutUser();
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
-                              builder: (context) => LoginScreen(),
+                              builder: (context) => const LoginScreen(),
                             ),
                           );
                         },
                       )
                     : IconButton(
-                        icon: Icon(Icons.message),
-                        onPressed: () {},
-                      ),
+                        icon: const Icon(Icons.message), onPressed: () {}),
               ],
             ),
             body: Center(
@@ -106,7 +108,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: ListView(
                   children: [
                     Padding(
-                      padding: EdgeInsets.all(15.0),
+                      padding: const EdgeInsets.all(15.0),
                       child: Column(
                         children: [
                           Row(
@@ -140,7 +142,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             borderColor: Colors.grey,
                                             text: 'Edit Profile',
                                             textColor: primaryColor,
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              print(FirebaseAuth
+                                                  .instance.currentUser!.email);
+                                            },
                                           )
                                         : isFollowing
                                             ? FollowButton(
@@ -228,15 +233,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
       children: [
         Text(
           '$num',
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 18.0,
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 5.0),
+        const SizedBox(height: 5.0),
         Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 15.0,
             fontWeight: FontWeight.w400,
             color: Colors.grey,

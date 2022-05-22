@@ -1,7 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lost_pet/utilities/colors.dart';
-import 'package:lost_pet/utilities/global_variables.dart';
+
+import 'package:lost_pet/screens/add_post_screen.dart';
+import 'package:lost_pet/screens/feed_screen.dart';
+import 'package:lost_pet/screens/profile_screen.dart';
+import 'package:lost_pet/screens/search_screen.dart';
 
 class MobileLayout extends StatefulWidget {
   const MobileLayout({Key? key}) : super(key: key);
@@ -13,6 +18,8 @@ class MobileLayout extends StatefulWidget {
 class _MobileLayoutState extends State<MobileLayout> {
   int _page = 0;
   late PageController _pageController;
+
+  String uid = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   void initState() {
@@ -36,6 +43,18 @@ class _MobileLayoutState extends State<MobileLayout> {
     });
     print(_page);
   }
+
+  List<Widget> homeScreenPages = [
+    FeedScreen(),
+    SearchScreen(),
+    AddPostScreen(),
+    Center(
+      child: Text('Chat'),
+    ),
+    ProfileScreen(
+      uid: FirebaseAuth.instance.currentUser!.uid,
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {

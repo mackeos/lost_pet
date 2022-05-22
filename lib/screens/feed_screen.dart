@@ -72,6 +72,8 @@ class FeedScreen extends StatelessWidget {
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (context, index) => Center(
                     child: Container(
+                      margin: EdgeInsets.symmetric(
+                          vertical: width > webScreenSize ? 15 : 0),
                       width: webScreenSize.toDouble(),
                       child: PostCard(
                         snap: snapshot.data!.docs[index].data(),
@@ -98,6 +100,8 @@ class FeedScreen extends StatelessWidget {
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (context, index) => Center(
                     child: Container(
+                      margin: EdgeInsets.symmetric(
+                          vertical: width > webScreenSize ? 15 : 0),
                       width: webScreenSize.toDouble(),
                       child: PostCard(
                         snap: snapshot.data!.docs[index].data(),

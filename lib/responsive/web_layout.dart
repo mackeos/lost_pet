@@ -1,6 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lost_pet/screens/add_post_screen.dart';
+import 'package:lost_pet/screens/feed_screen.dart';
+import 'package:lost_pet/screens/profile_screen.dart';
+import 'package:lost_pet/screens/search_screen.dart';
 import 'package:lost_pet/utilities/colors.dart';
-import 'package:lost_pet/utilities/global_variables.dart';
 
 class WebLayout extends StatefulWidget {
   const WebLayout({Key? key}) : super(key: key);
@@ -35,6 +39,18 @@ class _WebLayoutState extends State<WebLayout> {
     });
     print(_page);
   }
+
+  List<Widget> homeScreenPages = [
+    FeedScreen(),
+    SearchScreen(),
+    AddPostScreen(),
+    Center(
+      child: Text('Chat'),
+    ),
+    ProfileScreen(
+      uid: FirebaseAuth.instance.currentUser!.uid,
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -79,16 +95,6 @@ class _WebLayoutState extends State<WebLayout> {
             onPressed: () => navigationTapped(4),
           ),
         ],
-        /* bottom: const TabBar(
-          tabs: [
-            Tab(
-              text: "Lost Pets",
-            ),
-            Tab(
-              text: "Found Pets",
-            ),
-          ],
-        ), */
       ),
       body: PageView(
         children: homeScreenPages,
