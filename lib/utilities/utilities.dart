@@ -19,7 +19,7 @@ showSnackBar(BuildContext context, String message) {
       backgroundColor: Colors.grey[700],
       content: Text(
         message,
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.white,
         ),
       ),

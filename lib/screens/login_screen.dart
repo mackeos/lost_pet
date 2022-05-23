@@ -4,6 +4,7 @@ import 'package:lost_pet/resources/auth_methods.dart';
 import 'package:lost_pet/responsive/responsive_layout.dart';
 import 'package:lost_pet/responsive/mobile_layout.dart';
 import 'package:lost_pet/responsive/web_layout.dart';
+import 'package:lost_pet/screens/forgot_password_screen.dart';
 import 'package:lost_pet/screens/signup_screen.dart';
 import 'package:lost_pet/utilities/colors.dart';
 import 'package:lost_pet/utilities/global_variables.dart';
@@ -101,7 +102,24 @@ class _LoginScreenState extends State<LoginScreen> {
                 obscureText: true,
               ),
               const SizedBox(
-                height: 20,
+                height: 10,
+              ),
+              Row(
+                children: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ForgotPasswordScreen(),
+                          ),
+                        );
+                      },
+                      child: Text("Forgot Password?")),
+                ],
+              ),
+              const SizedBox(
+                height: 10,
               ),
               ElevatedButton(
                 onPressed: loginUser,

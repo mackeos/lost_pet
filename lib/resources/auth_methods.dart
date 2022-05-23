@@ -96,6 +96,19 @@ class AuthMethods {
   Future<void> signOutUser() async {
     await _auth.signOut();
   }
+
+  Future<String> resetPassword({
+    required String email,
+  }) async {
+    String res = "Error resetting password";
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      res = 'Success';
+    } catch (e) {
+      res = e.toString();
+    }
+    return res;
+  }
 }
 
 bool getUsername(String username) {
