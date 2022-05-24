@@ -1,0 +1,57 @@
+Date : 2022-05-24 14:22:17
+Directory : m:\Projects\lost_pet\lib
+Total : 27 files,  3011 codes, 12 comments, 228 blanks, all 3251 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| Dart     |         27 |      3,011 |         12 |        228 |      3,251 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                          | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                             |         27 |      3,011 |         12 |        228 |      3,251 |
+| models                                                        |          2 |         83 |          0 |         10 |         93 |
+| resources                                                     |          3 |        249 |          1 |         40 |        290 |
+| responsive                                                    |          3 |        226 |          1 |         28 |        255 |
+| screens                                                       |         10 |      1,889 |          9 |        112 |      2,010 |
+| utilities                                                     |          4 |         51 |          0 |         13 |         64 |
+| widgets                                                       |          4 |        440 |          1 |         19 |        460 |
++---------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                      | language | code       | comment    | blank      | total      |
++---------------------------------------------------------------+----------+------------+------------+------------+------------+
+| m:\Projects\lost_pet\lib\main.dart                            | Dart     |         73 |          0 |          6 |         79 |
+| m:\Projects\lost_pet\lib\models\post.dart                     | Dart     |         48 |          0 |          5 |         53 |
+| m:\Projects\lost_pet\lib\models\user.dart                     | Dart     |         35 |          0 |          5 |         40 |
+| m:\Projects\lost_pet\lib\resources\auth_methods.dart          | Dart     |        111 |          0 |         15 |        126 |
+| m:\Projects\lost_pet\lib\resources\firestore_methods.dart     | Dart     |        114 |          0 |         16 |        130 |
+| m:\Projects\lost_pet\lib\resources\storage_methods.dart       | Dart     |         24 |          1 |          9 |         34 |
+| m:\Projects\lost_pet\lib\responsive\mobile_layout.dart        | Dart     |         94 |          0 |         12 |        106 |
+| m:\Projects\lost_pet\lib\responsive\responsive_layout.dart    | Dart     |         35 |          1 |          6 |         42 |
+| m:\Projects\lost_pet\lib\responsive\web_layout.dart           | Dart     |         97 |          0 |         10 |        107 |
+| m:\Projects\lost_pet\lib\screens\add_post_details_screen.dart | Dart     |          0 |          0 |          1 |          1 |
+| m:\Projects\lost_pet\lib\screens\add_post_screen.dart         | Dart     |        403 |          3 |         22 |        428 |
+| m:\Projects\lost_pet\lib\screens\chat_screen.dart             | Dart     |        174 |          0 |         18 |        192 |
+| m:\Projects\lost_pet\lib\screens\comments_screen.dart         | Dart     |        105 |          1 |          6 |        112 |
+| m:\Projects\lost_pet\lib\screens\feed_screen.dart             | Dart     |        114 |          0 |          6 |        120 |
+| m:\Projects\lost_pet\lib\screens\forgot_password_screen.dart  | Dart     |        119 |          0 |         12 |        131 |
+| m:\Projects\lost_pet\lib\screens\login_screen.dart            | Dart     |        180 |          0 |         10 |        190 |
+| m:\Projects\lost_pet\lib\screens\profile_screen.dart          | Dart     |        275 |          3 |         14 |        292 |
+| m:\Projects\lost_pet\lib\screens\search_screen.dart           | Dart     |        288 |          2 |          8 |        298 |
+| m:\Projects\lost_pet\lib\screens\signup_screen.dart           | Dart     |        231 |          0 |         15 |        246 |
+| m:\Projects\lost_pet\lib\utilities\colors.dart                | Dart     |          8 |          0 |          2 |         10 |
+| m:\Projects\lost_pet\lib\utilities\global_variables.dart      | Dart     |          7 |          0 |          2 |          9 |
+| m:\Projects\lost_pet\lib\utilities\providers.dart             | Dart     |         12 |          0 |          4 |         16 |
+| m:\Projects\lost_pet\lib\utilities\utilities.dart             | Dart     |         24 |          0 |          5 |         29 |
+| m:\Projects\lost_pet\lib\widgets\Follow_button.dart           | Dart     |         42 |          0 |          3 |         45 |
+| m:\Projects\lost_pet\lib\widgets\comment_card.dart            | Dart     |        115 |          0 |          4 |        119 |
+| m:\Projects\lost_pet\lib\widgets\post_card.dart               | Dart     |        251 |          1 |          8 |        260 |
+| m:\Projects\lost_pet\lib\widgets\text_field_input.dart        | Dart     |         32 |          0 |          4 |         36 |
+| Total                                                         |          |      3,011 |         12 |        228 |      3,251 |
++---------------------------------------------------------------+----------+------------+------------+------------+------------+

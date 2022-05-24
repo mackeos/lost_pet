@@ -110,16 +110,3 @@ class AuthMethods {
     return res;
   }
 }
-
-bool getUsername(String username) {
-  bool result = false;
-  FirebaseFirestore.instance
-      .collection('users')
-      .where('username', isEqualTo: username)
-      .get()
-      .then(
-        (res) => result = true,
-        onError: (e) => print("Error completing: $e"),
-      );
-  return result;
-}

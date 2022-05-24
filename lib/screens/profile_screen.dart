@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lost_pet/resources/auth_methods.dart';
 import 'package:lost_pet/resources/firestore_methods.dart';
 import 'package:lost_pet/screens/chat_screen.dart';
+import 'package:lost_pet/screens/edit_profile_screen.dart';
 import 'package:lost_pet/screens/login_screen.dart';
 import 'package:lost_pet/utilities/colors.dart';
 import 'package:lost_pet/utilities/global_variables.dart';
@@ -159,7 +160,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             borderColor: Colors.grey,
                                             text: 'Edit Profile',
                                             textColor: primaryColor,
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              /* Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const EditProfileScreen(),
+                                                ),
+                                              ); */
+                                            },
                                           )
                                         : isFollowing
                                             ? FollowButton(

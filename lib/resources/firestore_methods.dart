@@ -126,4 +126,30 @@ class FirestoreMethods {
       print(e.toString());
     }
   }
+
+  Future<String> editProfile({
+    required String uid,
+    required String username,
+    required Uint8List profileImage,
+  }) async {
+    String res = "Something went wrong";
+
+    try {} catch (e) {
+      print(e);
+      res = e.toString();
+    }
+
+    return res;
+  }
+
+  Future<String> getUsername(String uid) async {
+    String username = "";
+    await _firestore
+        .collection('users')
+        .doc(uid)
+        .get()
+        .then((value) => username = value.data()!['username']);
+
+    return username;
+  }
 }

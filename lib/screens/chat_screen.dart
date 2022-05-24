@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lost_pet/resources/firestore_methods.dart';
 import 'package:lost_pet/utilities/colors.dart';
 import 'package:bubble/bubble.dart';
 import 'package:lost_pet/utilities/global_variables.dart';
+import 'package:uuid/uuid.dart';
 
 class ChatScreen extends StatefulWidget {
   final String friendUid;
@@ -32,6 +34,13 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void checkUser() async {
+    String username = '';
+    await FirebaseFirestore.instance
+        .collection('users')
+        .where('uid', isEqualTo: currentUid)
+        .get()
+        .then((value) => username = value.docs[0].data()['username']);
+
     await chats
         .where('users', isEqualTo: {widget.friendUid: null, currentUid: null})
         .limit(1)
@@ -43,17 +52,21 @@ class _ChatScreenState extends State<ChatScreen> {
                 chatId = querySnapshot.docs.single.id;
               });
             } else {
+              String chatRoomId = const Uuid().v1();
               await chats.add({
                 'users': {currentUid: null, widget.friendUid: null},
                 'names': {
-                  currentUid: FirebaseAuth.instance.currentUser!.displayName,
+                  currentUid: username,
                   widget.friendUid: widget.friendName
-                }
-              }).then((value) => {chatId = value});
+                },
+                "chatRoomId": chatRoomId
+              }).then((value) => {chatId = value.id});
             }
           },
         )
         .catchError((error) {});
+
+    setState(() {});
   }
 
   void sendMessage(String msg) {
@@ -95,8 +108,15 @@ class _ChatScreenState extends State<ChatScreen> {
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
-            child: CircularProgressIndicator(),
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(widget.friendName),
+              backgroundColor: barColor,
+            ),
+            body: Container(
+              color: mobileBackgroundColor,
+              child: Center(child: CircularProgressIndicator()),
+            ),
           );
         }
 
@@ -138,8 +158,7 @@ class _ChatScreenState extends State<ChatScreen> {
             reverse: true,
             children: snapshot.data!.docs.map(
               (DocumentSnapshot document) {
-                data = document.data()!;
-
+                data = document.data();
                 return BuildBubble(data['msg'], data['uid']);
               },
             ).toList(),
@@ -166,8 +185,11 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
               ),
               IconButton(
-                  icon: Icon(Icons.send_sharp),
-                  onPressed: () => sendMessage(_textController.text))
+                icon: const Icon(Icons.send_sharp),
+                onPressed: () {
+                  sendMessage(_textController.text);
+                },
+              ),
             ],
           ),
         )
@@ -183,7 +205,10 @@ class _ChatScreenState extends State<ChatScreen> {
       color: isSender(id) ? Colors.white : Colors.blue[200],
       child: Text(
         msg,
-        style: TextStyle(color: Colors.black),
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 18,
+        ),
         textAlign: TextAlign.left,
       ),
     );

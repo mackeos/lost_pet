@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lost_pet/screens/chats_list_screen.dart';
 import 'package:lost_pet/utilities/colors.dart';
 
 import 'package:lost_pet/screens/add_post_screen.dart';
@@ -48,9 +49,7 @@ class _MobileLayoutState extends State<MobileLayout> {
     FeedScreen(),
     SearchScreen(),
     AddPostScreen(),
-    Center(
-      child: Text('Chat'),
-    ),
+    ChatsListScreen(),
     ProfileScreen(
       uid: FirebaseAuth.instance.currentUser!.uid,
     ),
