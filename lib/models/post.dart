@@ -8,7 +8,7 @@ class Post {
   final String username;
   final String profileImage;
   final String type;
-  final datePosted;
+  final dynamic datePosted;
   final GeoPoint location;
 
   const Post({

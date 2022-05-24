@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lost_pet/screens/profile_screen.dart';
-import 'package:lost_pet/utilities/colors.dart';
 import 'package:lost_pet/utilities/global_variables.dart';
 
 class SearchScreen extends StatefulWidget {

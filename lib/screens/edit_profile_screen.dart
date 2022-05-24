@@ -1,15 +1,15 @@
 import 'dart:typed_data';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lost_pet/resources/auth_methods.dart';
+
 import 'package:lost_pet/resources/firestore_methods.dart';
 import 'package:lost_pet/responsive/mobile_layout.dart';
 import 'package:lost_pet/responsive/responsive_layout.dart';
 import 'package:lost_pet/responsive/web_layout.dart';
-import 'package:lost_pet/screens/login_screen.dart';
+
 import 'package:lost_pet/utilities/colors.dart';
 import 'package:lost_pet/utilities/utilities.dart';
 import 'package:lost_pet/widgets/text_field_input.dart';

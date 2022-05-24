@@ -52,8 +52,9 @@ class _PostCardState extends State<PostCard> {
   static Future<void> openMap(String latitude, String longitude) async {
     final Uri _googleMapUrl = Uri.parse(
         'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude');
-    if (!await launchUrl(_googleMapUrl))
+    if (!await launchUrl(_googleMapUrl)) {
       throw 'Could not launch $_googleMapUrl';
+    }
   }
 
   @override
@@ -96,7 +97,7 @@ class _PostCardState extends State<PostCard> {
                       padding: const EdgeInsets.only(left: 10),
                       child: Text(
                         widget.snap['username'],
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
@@ -133,7 +134,7 @@ class _PostCardState extends State<PostCard> {
                             ),
                           );
                         },
-                        icon: Icon(Icons.more_vert),
+                        icon: const Icon(Icons.more_vert),
                       )
                     : Container(),
               ],
@@ -170,7 +171,7 @@ class _PostCardState extends State<PostCard> {
                     openMap(widget.snap["location"].latitude.toString(),
                         widget.snap["location"].longitude.toString());
                   },
-                  icon: Icon(Icons.map)),
+                  icon: const Icon(Icons.map)),
               IconButton(
                   onPressed: () => Navigator.of(context).push(
                         MaterialPageRoute(
@@ -179,8 +180,8 @@ class _PostCardState extends State<PostCard> {
                           ),
                         ),
                       ),
-                  icon: Icon(Icons.comment)),
-              IconButton(onPressed: () {}, icon: Icon(Icons.send)),
+                  icon: const Icon(Icons.comment)),
+              IconButton(onPressed: () {}, icon: const Icon(Icons.send)),
               Expanded(
                 child: Container(),
               ),
@@ -191,7 +192,7 @@ class _PostCardState extends State<PostCard> {
                   DateFormat.yMMMMd().format(
                     widget.snap["datePosted"].toDate(),
                   ),
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: secondaryColor,
                     fontSize: 16,
                   ),
@@ -212,13 +213,13 @@ class _PostCardState extends State<PostCard> {
                   padding: const EdgeInsets.only(top: 5),
                   child: RichText(
                     text: TextSpan(
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: primaryColor,
                       ),
                       children: [
                         TextSpan(
                           text: widget.snap['username'] + " ",
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -242,7 +243,7 @@ class _PostCardState extends State<PostCard> {
                     padding: const EdgeInsets.symmetric(vertical: 5),
                     child: Text(
                       "View all $commentLength comments",
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: secondaryColor,
                         fontSize: 16,
                       ),
