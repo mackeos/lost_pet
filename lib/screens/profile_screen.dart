@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lost_pet/resources/auth_methods.dart';
 import 'package:lost_pet/resources/firestore_methods.dart';
+import 'package:lost_pet/screens/chat_screen.dart';
 import 'package:lost_pet/screens/login_screen.dart';
 import 'package:lost_pet/utilities/colors.dart';
 import 'package:lost_pet/utilities/global_variables.dart';
@@ -63,6 +64,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
   }
 
+  void callChatScreen(String friendUid, String friendName) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ChatScreen(
+          friendUid: friendUid,
+          friendName: friendName,
+        ),
+      ),
+    );
+  }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -100,7 +113,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         },
                       )
                     : IconButton(
-                        icon: const Icon(Icons.message), onPressed: () {}),
+                        icon: const Icon(Icons.message),
+                        onPressed: () {
+                          callChatScreen(widget.uid, userData['username']);
+                        }),
               ],
             ),
             body: Center(

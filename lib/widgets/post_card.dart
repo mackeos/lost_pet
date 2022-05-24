@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lost_pet/resources/firestore_methods.dart';
 import 'package:lost_pet/screens/comments_screen.dart';
+import 'package:lost_pet/screens/profile_screen.dart';
 import 'package:lost_pet/utilities/colors.dart';
 import 'package:lost_pet/utilities/utilities.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -81,11 +82,22 @@ class _PostCardState extends State<PostCard> {
                   backgroundImage: NetworkImage(widget.snap['profileImage']),
                 ),
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Text(
-                      widget.snap['username'],
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                  child: GestureDetector(
+                    onTap: () => Navigator.of(
+                      context,
+                    ).push(
+                      MaterialPageRoute(
+                        builder: (context) => ProfileScreen(
+                          uid: widget.snap['uid'],
+                        ),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Text(
+                        widget.snap['username'],
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                 ),
