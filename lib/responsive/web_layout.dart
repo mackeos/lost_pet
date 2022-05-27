@@ -45,10 +45,10 @@ class _WebLayoutState extends State<WebLayout> {
   }
 
   List<Widget> homeScreenPages = [
-    FeedScreen(),
-    SearchScreen(),
-    AddPostScreen(),
-    ChatsListScreen(),
+    const FeedScreen(),
+    const SearchScreen(),
+    const AddPostScreen(),
+    const ChatsListScreen(),
     ProfileScreen(
       uid: FirebaseAuth.instance.currentUser!.uid,
     ),
@@ -69,7 +69,7 @@ class _WebLayoutState extends State<WebLayout> {
                 "assets/pets-logo-white.png",
                 height: 30,
               ),
-              Text(
+              const Text(
                 'Lost Pet',
                 style: TextStyle(
                   fontSize: 30,

@@ -42,7 +42,6 @@ class _ChatsListScreenState extends State<ChatsListScreen> {
       ),
       body: Container(
         color: webBackgroundColor,
-        margin: EdgeInsets.symmetric(vertical: width > webScreenSize ? 15 : 0),
         child: StreamBuilder(
           stream: FirebaseFirestore.instance
               .collection("chats")
@@ -80,12 +79,12 @@ class _ChatsListScreenState extends State<ChatsListScreen> {
                       },
                       child: Container(
                         color: mobileBackgroundColor,
-                        margin: EdgeInsets.all(10),
+                        margin: const EdgeInsets.all(10),
                         width: webScreenSize.toDouble(),
                         child: ListTile(
                           title: Row(
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
                               Expanded(
@@ -101,14 +100,14 @@ class _ChatsListScreenState extends State<ChatsListScreen> {
                                         children: [
                                           Text(
                                             names.values.first,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: primaryColor,
                                             ),
                                           ),
                                           Text(
                                             lastTime,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               color: primaryColor,
                                             ),
                                           ),
@@ -126,7 +125,7 @@ class _ChatsListScreenState extends State<ChatsListScreen> {
                                             flex: 2,
                                             child: Text(
                                               lastMsg,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   color: primaryColor),
                                               overflow: TextOverflow.ellipsis,
                                               maxLines: 1,

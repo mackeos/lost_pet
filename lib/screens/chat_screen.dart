@@ -106,8 +106,8 @@ class _ChatScreenState extends State<ChatScreen> {
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
-          return Center(
-            child: Text("Something went wrong"),
+          return const Center(
+            child: const Text("Something went wrong"),
           );
         }
 
@@ -117,13 +117,13 @@ class _ChatScreenState extends State<ChatScreen> {
               title: Text(widget.friendName),
               backgroundColor: barColor,
               leading: IconButton(
-                icon: Icon(Icons.arrow_back),
+                icon: const Icon(Icons.arrow_back),
                 onPressed: () => Navigator.of(context).pop(),
               ),
             ),
             body: Container(
               color: mobileBackgroundColor,
-              child: Center(child: CircularProgressIndicator()),
+              child: const Center(child: CircularProgressIndicator()),
             ),
           );
         }
@@ -136,7 +136,7 @@ class _ChatScreenState extends State<ChatScreen> {
               backgroundColor: barColor,
               title: Text(widget.friendName),
               leading: IconButton(
-                icon: Icon(Icons.arrow_back),
+                icon: const Icon(Icons.arrow_back),
                 onPressed: () => Navigator.of(context).pop(),
               ),
             ),
@@ -186,7 +186,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   padding: const EdgeInsets.only(left: 18.0),
                   child: TextField(
                     controller: _textController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Type a message',
                       border: InputBorder.none,
                     ),
@@ -217,7 +217,7 @@ class _ChatScreenState extends State<ChatScreen> {
       color: isSender(id) ? Colors.white : Colors.blue[200],
       child: Text(
         msg,
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.black,
           fontSize: 18,
         ),

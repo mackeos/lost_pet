@@ -46,10 +46,10 @@ class _MobileLayoutState extends State<MobileLayout> {
   }
 
   List<Widget> homeScreenPages = [
-    FeedScreen(),
-    SearchScreen(),
-    AddPostScreen(),
-    ChatsListScreen(),
+    const FeedScreen(),
+    const SearchScreen(),
+    const AddPostScreen(),
+    const ChatsListScreen(),
     ProfileScreen(
       uid: FirebaseAuth.instance.currentUser!.uid,
     ),
@@ -59,7 +59,7 @@ class _MobileLayoutState extends State<MobileLayout> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         children: homeScreenPages,
         controller: _pageController,
         onPageChanged: onPageChanged,

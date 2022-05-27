@@ -44,6 +44,13 @@ class _SignupScreenState extends State<SignupScreen> {
     super.dispose();
   }
 
+  String? get _usernameErrorText {
+    if (_usernameController.text.isEmpty) {
+      return 'Username is required';
+    }
+    return null;
+  }
+
   void selectImage(context) async {
     return showDialog(
       context: context,
@@ -96,9 +103,9 @@ class _SignupScreenState extends State<SignupScreen> {
     });
 
     String res = await AuthMethods().signupUser(
-      email: _emailController.text,
+      email: _emailController.text.toLowerCase(),
       password: _passwordController.text.trim(),
-      username: _usernameController.text.trim(),
+      username: _usernameController.text.trim().toLowerCase(),
       profileImage: _profileImage!,
     );
     setState(() {
@@ -186,6 +193,9 @@ class _SignupScreenState extends State<SignupScreen> {
                 hintText: "Email",
                 keyboardType: TextInputType.emailAddress,
                 textEditingController: _emailController,
+                onChanged: (String) {
+                  setState(() {});
+                },
               ),
               const SizedBox(
                 height: 20,
@@ -194,6 +204,10 @@ class _SignupScreenState extends State<SignupScreen> {
                 hintText: "Username",
                 keyboardType: TextInputType.text,
                 textEditingController: _usernameController,
+                errorText: _usernameErrorText,
+                onChanged: (value) {
+                  setState(() {});
+                },
               ),
               const SizedBox(
                 height: 20,
@@ -203,6 +217,9 @@ class _SignupScreenState extends State<SignupScreen> {
                 keyboardType: TextInputType.text,
                 textEditingController: _passwordController,
                 obscureText: true,
+                onChanged: (String) {
+                  setState(() {});
+                },
               ),
               const SizedBox(
                 height: 20,

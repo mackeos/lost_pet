@@ -129,11 +129,39 @@ class FirestoreMethods {
   Future<String> editProfile({
     required String uid,
     required String username,
-    required Uint8List profileImage,
+    required String profileImage,
   }) async {
     String res = "Something went wrong";
 
-    try {} catch (e) {
+    try {
+      /* String imageUrl = await StorageMethods()
+          .uploadImageToStorage('profile_images', profileImage, false); */
+      _firestore.collection('users').doc(uid).update(
+        {
+          'username': username,
+          'profileImage': profileImage,
+        },
+      );
+
+      CollectionReference<Map<String, dynamic>> posts =
+          _firestore.collection('posts');
+
+      var response = await posts.where('uid', isEqualTo: uid).get();
+
+      var batch = FirebaseFirestore.instance.batch();
+      response.docs.forEach((doc) {
+        var docRef = posts.doc(doc.id);
+        batch.update(
+            docRef, {'username': username, 'profileImage': profileImage});
+      });
+
+      batch.commit().then((a) {
+        print(
+            'updated all usersnames and profile pics inside posts collection');
+      });
+
+      res = "Success";
+    } catch (e) {
       print(e);
       res = e.toString();
     }

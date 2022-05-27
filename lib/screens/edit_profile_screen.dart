@@ -1,11 +1,13 @@
 import 'dart:typed_data';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:lost_pet/resources/firestore_methods.dart';
+import 'package:lost_pet/resources/storage_methods.dart';
 import 'package:lost_pet/responsive/mobile_layout.dart';
 import 'package:lost_pet/responsive/responsive_layout.dart';
 import 'package:lost_pet/responsive/web_layout.dart';
@@ -17,29 +19,46 @@ import 'package:lost_pet/widgets/text_field_input.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  const EditProfileScreen({Key? key}) : super(key: key);
+  final String currentUid;
+  const EditProfileScreen({Key? key, required this.currentUid})
+      : super(key: key);
 
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   Uint8List? _profileImage;
 
+  var userData = {};
+
   bool _isLoading = false;
 
-  void defaultImage() async {
-    var imageData = await rootBundle.load('assets/user-avatar.png');
+  getData() async {
     setState(() {
-      _profileImage = imageData.buffer.asUint8List();
+      _isLoading = true;
+    });
+    try {
+      var userSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(widget.currentUid)
+          .get();
+
+      setState(() {
+        userData = userSnapshot.data()!;
+        _usernameController.text = userData['username'];
+      });
+    } catch (e) {
+      print(e);
+    }
+    setState(() {
+      _isLoading = false;
     });
   }
 
   @override
   void dispose() {
-    _passwordController.dispose();
     _usernameController.dispose();
     _profileImage = null;
     super.dispose();
@@ -96,10 +115,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       _isLoading = true;
     });
 
+    if (_profileImage != null) {
+      String imageUrl = await StorageMethods()
+          .uploadImageToStorage('profile_images', _profileImage!, false);
+      userData['profileImage'] = imageUrl;
+    }
+
     String res = await FirestoreMethods().editProfile(
       uid: FirebaseAuth.instance.currentUser!.uid,
-      username: _usernameController.text,
-      profileImage: _profileImage!,
+      username: _usernameController.text.trim().toLowerCase(),
+      profileImage: userData['profileImage'],
     );
     setState(() {
       _isLoading = false;
@@ -115,7 +140,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           ),
         ),
       );
-      res = "${_usernameController.text} successfully signed up!";
+      res = "Profile Edit Complete";
       showSnackBar(
         context,
         res,
@@ -131,7 +156,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   void initState() {
     super.initState();
-    defaultImage();
+    getData();
   }
 
   @override
@@ -146,88 +171,94 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ),
         backgroundColor: Colors.transparent,
       ),
-      body: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 32),
-          width: double.infinity,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Flexible(child: Container(), flex: 2),
-              Stack(
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : Container(
+              padding: const EdgeInsets.symmetric(horizontal: 32),
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  _profileImage != null
-                      ? CircleAvatar(
-                          radius: 64,
-                          backgroundImage: MemoryImage(_profileImage!),
-                        )
-                      : const CircleAvatar(
-                          radius: 64,
-                          backgroundImage: AssetImage("assets/user-avatar.png"),
+                  Flexible(child: Container(), flex: 2),
+                  Stack(
+                    children: [
+                      _profileImage != null
+                          ? CircleAvatar(
+                              radius: 64,
+                              backgroundImage: MemoryImage(_profileImage!),
+                            )
+                          : CircleAvatar(
+                              radius: 64,
+                              backgroundImage:
+                                  NetworkImage(userData['profileImage']),
+                            ),
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: IconButton(
+                          onPressed: () => selectImage(context),
+                          icon: const Icon(
+                            Icons.add_a_photo_outlined,
+                            size: 35,
+                          ),
                         ),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: IconButton(
-                      onPressed: () => selectImage(context),
-                      icon: const Icon(
-                        Icons.add_a_photo_outlined,
-                        size: 35,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextFieldInput(
+                    hintText: userData['username'],
+                    keyboardType: TextInputType.text,
+                    textEditingController: _usernameController,
+                    onChanged: (String) {
+                      setState(() {});
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  InkWell(
+                    onTap: editProfile,
+                    child: Container(
+                      child: _isLoading
+                          ? const Center(
+                              child: CircularProgressIndicator(
+                                color: primaryColor,
+                              ),
+                            )
+                          : const Text(
+                              "Confirm edit",
+                            ),
+                      width: double.infinity,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      decoration: const ShapeDecoration(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(6),
+                          ),
+                        ),
+                        color: blueColor,
                       ),
                     ),
+                  ),
+                  Flexible(
+                    child: Container(),
+                    flex: 2,
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              TextFieldInput(
-                hintText: "Username",
-                keyboardType: TextInputType.text,
-                textEditingController: _usernameController,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              InkWell(
-                onTap: editProfile,
-                child: Container(
-                  child: _isLoading
-                      ? const Center(
-                          child: CircularProgressIndicator(
-                            color: primaryColor,
-                          ),
-                        )
-                      : const Text(
-                          "Confirm edit",
-                        ),
-                  width: double.infinity,
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  decoration: const ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(6),
-                      ),
-                    ),
-                    color: blueColor,
-                  ),
-                ),
-              ),
-              Flexible(
-                child: Container(),
-                flex: 2,
-              ),
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 }

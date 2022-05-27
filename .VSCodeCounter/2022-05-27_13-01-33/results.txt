@@ -1,0 +1,60 @@
+Date : 2022-05-27 13:01:33
+Directory : m:\Projects\lost_pet\lib
+Total : 30 files,  3474 codes, 17 comments, 269 blanks, all 3760 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| Dart     |         30 |      3,474 |         17 |        269 |      3,760 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                          | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                             |         30 |      3,474 |         17 |        269 |      3,760 |
+| models                                                        |          2 |         83 |          0 |         10 |         93 |
+| resources                                                     |          3 |        257 |          1 |         44 |        302 |
+| responsive                                                    |          4 |        267 |          1 |         33 |        301 |
+| screens                                                       |         12 |      2,302 |         14 |        144 |      2,460 |
+| utilities                                                     |          4 |         51 |          0 |         13 |         64 |
+| widgets                                                       |          4 |        441 |          1 |         19 |        461 |
++---------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                      | language | code       | comment    | blank      | total      |
++---------------------------------------------------------------+----------+------------+------------+------------+------------+
+| m:\Projects\lost_pet\lib\main.dart                            | Dart     |         73 |          0 |          6 |         79 |
+| m:\Projects\lost_pet\lib\models\post.dart                     | Dart     |         48 |          0 |          5 |         53 |
+| m:\Projects\lost_pet\lib\models\user.dart                     | Dart     |         35 |          0 |          5 |         40 |
+| m:\Projects\lost_pet\lib\resources\auth_methods.dart          | Dart     |         99 |          0 |         14 |        113 |
+| m:\Projects\lost_pet\lib\resources\firestore_methods.dart     | Dart     |        134 |          0 |         21 |        155 |
+| m:\Projects\lost_pet\lib\resources\storage_methods.dart       | Dart     |         24 |          1 |          9 |         34 |
+| m:\Projects\lost_pet\lib\responsive\chat.dart                 | Dart     |         21 |          0 |          4 |         25 |
+| m:\Projects\lost_pet\lib\responsive\mobile_layout.dart        | Dart     |         94 |          0 |         12 |        106 |
+| m:\Projects\lost_pet\lib\responsive\responsive_layout.dart    | Dart     |         35 |          1 |          6 |         42 |
+| m:\Projects\lost_pet\lib\responsive\web_layout.dart           | Dart     |        117 |          0 |         11 |        128 |
+| m:\Projects\lost_pet\lib\screens\add_post_details_screen.dart | Dart     |          0 |          0 |          1 |          1 |
+| m:\Projects\lost_pet\lib\screens\add_post_screen.dart         | Dart     |        411 |          3 |         22 |        436 |
+| m:\Projects\lost_pet\lib\screens\chat_screen.dart             | Dart     |        210 |          0 |         19 |        229 |
+| m:\Projects\lost_pet\lib\screens\chats_list_screen.dart       | Dart     |        146 |          1 |         11 |        158 |
+| m:\Projects\lost_pet\lib\screens\comments_screen.dart         | Dart     |        105 |          1 |          6 |        112 |
+| m:\Projects\lost_pet\lib\screens\edit_profile_screen.dart     | Dart     |        216 |          0 |         18 |        234 |
+| m:\Projects\lost_pet\lib\screens\feed_screen.dart             | Dart     |        118 |          0 |          6 |        124 |
+| m:\Projects\lost_pet\lib\screens\forgot_password_screen.dart  | Dart     |        113 |          0 |         14 |        127 |
+| m:\Projects\lost_pet\lib\screens\login_screen.dart            | Dart     |        180 |          0 |         10 |        190 |
+| m:\Projects\lost_pet\lib\screens\profile_screen.dart          | Dart     |        285 |          7 |         14 |        306 |
+| m:\Projects\lost_pet\lib\screens\search_screen.dart           | Dart     |        287 |          2 |          8 |        297 |
+| m:\Projects\lost_pet\lib\screens\signup_screen.dart           | Dart     |        231 |          0 |         15 |        246 |
+| m:\Projects\lost_pet\lib\utilities\colors.dart                | Dart     |          8 |          0 |          2 |         10 |
+| m:\Projects\lost_pet\lib\utilities\global_variables.dart      | Dart     |          7 |          0 |          2 |          9 |
+| m:\Projects\lost_pet\lib\utilities\providers.dart             | Dart     |         12 |          0 |          4 |         16 |
+| m:\Projects\lost_pet\lib\utilities\utilities.dart             | Dart     |         24 |          0 |          5 |         29 |
+| m:\Projects\lost_pet\lib\widgets\Follow_button.dart           | Dart     |         42 |          0 |          3 |         45 |
+| m:\Projects\lost_pet\lib\widgets\comment_card.dart            | Dart     |        115 |          0 |          4 |        119 |
+| m:\Projects\lost_pet\lib\widgets\post_card.dart               | Dart     |        252 |          1 |          8 |        261 |
+| m:\Projects\lost_pet\lib\widgets\text_field_input.dart        | Dart     |         32 |          0 |          4 |         36 |
+| Total                                                         |          |      3,474 |         17 |        269 |      3,760 |
++---------------------------------------------------------------+----------+------------+------------+------------+------------+

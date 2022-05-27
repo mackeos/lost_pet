@@ -82,6 +82,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 hintText: "Email",
                 keyboardType: TextInputType.emailAddress,
                 textEditingController: _emailController,
+                onChanged: (String) {
+                  setState(() {});
+                },
               ),
               const SizedBox(
                 height: 20,

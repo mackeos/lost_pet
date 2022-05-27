@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     String res = await AuthMethods().loginUser(
-      email: _emailController.text,
+      email: _emailController.text.toLowerCase(),
       password: _passwordController.text,
     );
 
@@ -91,6 +91,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 hintText: "Email",
                 keyboardType: TextInputType.emailAddress,
                 textEditingController: _emailController,
+                onChanged: (String) {
+                  setState(() {});
+                },
               ),
               const SizedBox(
                 height: 20,
@@ -100,6 +103,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 keyboardType: TextInputType.text,
                 textEditingController: _passwordController,
                 obscureText: true,
+                onChanged: (String) {
+                  setState(() {});
+                },
               ),
               const SizedBox(
                 height: 10,

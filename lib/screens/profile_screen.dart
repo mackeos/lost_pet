@@ -167,12 +167,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             text: 'Edit Profile',
                                             textColor: primaryColor,
                                             onPressed: () {
-                                              /* Navigator.of(context).push(
+                                              Navigator.of(context).push(
                                                 MaterialPageRoute(
                                                   builder: (context) =>
-                                                      const EditProfileScreen(),
+                                                      EditProfileScreen(
+                                                          currentUid:
+                                                              widget.uid),
                                                 ),
-                                              ); */
+                                              );
                                             },
                                           )
                                         : isFollowing
