@@ -83,8 +83,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return isLoading
         ? Scaffold(
+            backgroundColor: width > webScreenSize
+                ? webBackgroundColor
+                : mobileBackgroundColor,
             body: Container(
               color: mobileBackgroundColor,
               child: const Center(
@@ -95,6 +99,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           )
         : Scaffold(
+            backgroundColor: width > webScreenSize
+                ? webBackgroundColor
+                : mobileBackgroundColor,
             appBar: AppBar(
               backgroundColor: barColor,
               title: Text(userData['username']),
@@ -121,6 +128,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             body: Center(
               child: Container(
                 width: webScreenSize.toDouble(),
+                color: mobileBackgroundColor,
                 child: ListView(
                   children: [
                     Padding(

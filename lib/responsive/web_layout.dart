@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
+
 import 'package:lost_pet/screens/add_post_screen.dart';
 import 'package:lost_pet/screens/chats_list_screen.dart';
 import 'package:lost_pet/screens/feed_screen.dart';
@@ -56,7 +59,26 @@ class _WebLayoutState extends State<WebLayout> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue[900],
-        title: const Text("Feed"),
+        title: GestureDetector(
+          onTap: () {
+            navigationTapped(0);
+          },
+          child: Row(
+            children: [
+              Image.asset(
+                "assets/pets-logo-white.png",
+                height: 30,
+              ),
+              Text(
+                'Lost Pet',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
         actions: [
           IconButton(
             icon: Icon(
@@ -89,7 +111,7 @@ class _WebLayoutState extends State<WebLayout> {
           IconButton(
             icon: Icon(
               Icons.person_outline,
-              color: _page == 3 ? primaryColor : secondaryColor,
+              color: _page == 4 ? primaryColor : secondaryColor,
             ),
             onPressed: () => navigationTapped(4),
           ),

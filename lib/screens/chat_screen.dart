@@ -71,8 +71,12 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void sendMessage(String msg) {
     if (msg == '') return;
+    msg = msg.trim();
+    var sendTime = DateTime.now();
+    chats.doc(chatId).update(
+        {'lastMsg': msg, 'lastSender': currentUid, 'lastTime': sendTime});
     chats.doc(chatId).collection('messages').add({
-      'createdOn': FieldValue.serverTimestamp(),
+      'createdOn': sendTime,
       'uid': currentUid,
       'friendName': widget.friendName,
       'msg': msg
@@ -112,6 +116,10 @@ class _ChatScreenState extends State<ChatScreen> {
             appBar: AppBar(
               title: Text(widget.friendName),
               backgroundColor: barColor,
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
             ),
             body: Container(
               color: mobileBackgroundColor,
@@ -123,6 +131,7 @@ class _ChatScreenState extends State<ChatScreen> {
         if (snapshot.hasData) {
           var data;
           return Scaffold(
+            backgroundColor: webBackgroundColor,
             appBar: AppBar(
               backgroundColor: barColor,
               title: Text(widget.friendName),
@@ -154,14 +163,17 @@ class _ChatScreenState extends State<ChatScreen> {
     return Column(
       children: [
         Expanded(
-          child: ListView(
-            reverse: true,
-            children: snapshot.data!.docs.map(
-              (DocumentSnapshot document) {
-                data = document.data();
-                return BuildBubble(data['msg'], data['uid']);
-              },
-            ).toList(),
+          child: Container(
+            color: mobileBackgroundColor,
+            child: ListView(
+              reverse: true,
+              children: snapshot.data!.docs.map(
+                (DocumentSnapshot document) {
+                  data = document.data();
+                  return BuildBubble(data['msg'], data['uid']);
+                },
+              ).toList(),
+            ),
           ),
         ),
         Container(
@@ -200,7 +212,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Bubble BuildBubble(String msg, String id) {
     return Bubble(
       margin: BubbleEdges.fromLTRB(
-          isSender(id) ? 40 : 5, 5, isSender(id) ? 5 : 40, 5),
+          isSender(id) ? 50 : 5, 5, isSender(id) ? 5 : 50, 5),
       alignment: getAlignment(id),
       color: isSender(id) ? Colors.white : Colors.blue[200],
       child: Text(

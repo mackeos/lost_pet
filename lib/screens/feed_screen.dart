@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lost_pet/utilities/colors.dart';
 import 'package:lost_pet/utilities/global_variables.dart';
 import 'package:lost_pet/widgets/post_card.dart';
@@ -40,7 +41,10 @@ class FeedScreen extends StatelessWidget {
               )
             : AppBar(
                 backgroundColor: Colors.blue[900],
-                title: const Text("Feed"),
+                title: Image.asset(
+                  "assets/pets-logo-white.png",
+                  height: 30,
+                ),
                 bottom: const TabBar(
                   tabs: [
                     Tab(

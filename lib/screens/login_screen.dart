@@ -80,9 +80,9 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               Flexible(child: Container(), flex: 2),
               SvgPicture.asset(
-                "assets/login.svg",
+                "assets/logo.svg",
                 color: primaryColor,
-                height: 120,
+                height: 100,
               ),
               const SizedBox(
                 height: 20,
