@@ -30,7 +30,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: barColor,
@@ -70,229 +70,164 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
             ),
           ],
-          bottom: const TabBar(
-            tabs: [
-              Tab(
-                text: "Users",
-              ),
-              Tab(
-                text: "Lost Pets",
-              ),
-              Tab(
-                text: "Found Pets",
-              ),
-            ],
-          ),
+          bottom: isSearching
+              ? null
+              : const TabBar(
+                  tabs: [
+                    Tab(
+                      text: "Lost Pets",
+                    ),
+                    Tab(
+                      text: "Found Pets",
+                    ),
+                  ],
+                ),
         ),
         body: isSearching
             ? Center(
                 child: Container(
                   width: webScreenSize.toDouble(),
-                  child: TabBarView(
-                    children: [
-                      FutureBuilder(
-                        future: FirebaseFirestore.instance
-                            .collection('users')
-                            .where(
-                              'username',
-                              isGreaterThanOrEqualTo: _searchController.text,
-                            )
-                            .get(),
-                        builder: (context, AsyncSnapshot snapshot) {
-                          if (!snapshot.hasData) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                          return ListView.builder(
-                            itemCount: snapshot.data.docs.length,
-                            itemBuilder: (context, index) {
-                              return ListTile(
-                                leading: CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                    snapshot.data.docs[index]
-                                        .data()['profileImage'],
-                                  ),
+                  child: FutureBuilder(
+                    future: FirebaseFirestore.instance
+                        .collection('users')
+                        .where(
+                          'username',
+                          isGreaterThanOrEqualTo: _searchController.text,
+                        )
+                        .get(),
+                    builder: (context, AsyncSnapshot snapshot) {
+                      if (!snapshot.hasData) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return ListView.builder(
+                        itemCount: snapshot.data.docs.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            leading: CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                snapshot.data.docs[index]
+                                    .data()['profileImage'],
+                              ),
+                            ),
+                            title: Text(
+                              snapshot.data.docs[index].data()['username'],
+                            ),
+                            onTap: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => ProfileScreen(
+                                  uid: snapshot.data.docs[index].data()['uid'],
                                 ),
-                                title: Text(
-                                  snapshot.data.docs[index].data()['username'],
-                                ),
-                                onTap: () => Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => ProfileScreen(
-                                      uid: snapshot.data.docs[index]
-                                          .data()['uid'],
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
+                              ),
+                            ),
                           );
                         },
-                      ),
-                      FutureBuilder(
-                        future: FirebaseFirestore.instance
+                      );
+                    },
+                  ),
+                ),
+              )
+            : Center(
+                child: Container(
+                  width: webScreenSize.toDouble(),
+                  child: TabBarView(
+                    children: [
+                      buildFutureBuilderGrid(
+                        FirebaseFirestore.instance
                             .collection("posts")
                             .where("type", isEqualTo: "lost")
                             .orderBy("datePosted", descending: true)
                             .get(),
-                        builder: (context, AsyncSnapshot snapshot) {
-                          if (!snapshot.hasData) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: GridView.builder(
-                              itemCount: snapshot.data.docs.length,
-                              itemBuilder: (context, index) {
-                                return GestureDetector(
-                                  onTap: () {},
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Expanded(
-                                        child: Container(
-                                          padding: const EdgeInsets.all(5),
-                                          decoration: BoxDecoration(
-                                            color: Colors.blue[900],
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                          child: SizedBox(
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                              child: Image.network(
-                                                snapshot.data.docs[index]
-                                                    .data()['postUrl'],
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 2),
-                                        child: Text(
-                                          // products is out demo list
-                                          snapshot.data.docs[index]
-                                              .data()['username'],
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                      Text(
-                                        snapshot.data.docs[index]
-                                            .data()['description'],
-                                        style: const TextStyle(
-                                          color: secondaryColor,
-                                        ),
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                        softWrap: true,
-                                      )
-                                    ],
-                                  ),
-                                );
-                              },
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 3,
-                                crossAxisSpacing: 5,
-                                mainAxisSpacing: 1.5,
-                                childAspectRatio: 1,
-                              ),
-                            ),
-                          );
-                        },
                       ),
-                      FutureBuilder(
-                        future: FirebaseFirestore.instance
+                      buildFutureBuilderGrid(
+                        FirebaseFirestore.instance
                             .collection("posts")
                             .where("type", isEqualTo: "found")
                             .orderBy("datePosted", descending: true)
                             .get(),
-                        builder: (context, AsyncSnapshot snapshot) {
-                          if (!snapshot.hasData) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                          print(snapshot.data.docs.length);
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: GridView.builder(
-                              itemCount: snapshot.data.docs.length,
-                              itemBuilder: (context, index) {
-                                return GestureDetector(
-                                  onTap: () {},
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Expanded(
-                                        child: Container(
-                                          padding: const EdgeInsets.all(5),
-                                          width: double.infinity,
-                                          height: double.infinity,
-                                          decoration: BoxDecoration(
-                                            color: Colors.blue[900],
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                          child: Image.network(
-                                            snapshot.data.docs[index]
-                                                .data()['postUrl'],
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 2),
-                                        child: Text(
-                                          // products is out demo list
-                                          snapshot.data.docs[index]
-                                              .data()['username'],
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                      Text(
-                                        snapshot.data.docs[index]
-                                            .data()['description'],
-                                        style:
-                                            TextStyle(color: Colors.grey[300]),
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                        softWrap: true,
-                                      )
-                                    ],
-                                  ),
-                                );
-                              },
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 3,
-                                crossAxisSpacing: 5,
-                                mainAxisSpacing: 1.5,
-                                childAspectRatio: 1,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
+                      )
                     ],
                   ),
                 ),
-              )
-            : Container(),
+              ),
       ),
+    );
+  }
+
+  FutureBuilder<QuerySnapshot<Map<String, dynamic>>> buildFutureBuilderGrid(
+    Future<QuerySnapshot<Map<String, dynamic>>>? future,
+  ) {
+    return FutureBuilder(
+      future: future,
+      builder: (context, AsyncSnapshot snapshot) {
+        if (!snapshot.hasData) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: GridView.builder(
+            itemCount: snapshot.data.docs.length,
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () {},
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          color: barColor,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: SizedBox(
+                          child: Container(
+                            width: double.infinity,
+                            height: double.infinity,
+                            child: Image.network(
+                              snapshot.data.docs[index].data()['postUrl'],
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 2),
+                      child: Text(
+                        // products is out demo list
+                        snapshot.data.docs[index].data()['username'],
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Text(
+                      snapshot.data.docs[index].data()['description'] == ''
+                          ? "No description"
+                          : snapshot.data.docs[index].data()['description'],
+                      style: const TextStyle(
+                        color: secondaryColor,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      softWrap: true,
+                    )
+                  ],
+                ),
+              );
+            },
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              crossAxisSpacing: 2.5,
+              mainAxisSpacing: 2.5,
+              childAspectRatio: 1,
+            ),
+          ),
+        );
+      },
     );
   }
 }
