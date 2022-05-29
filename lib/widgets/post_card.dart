@@ -104,6 +104,7 @@ class _PostCardState extends State<PostCard> {
                 ),
                 FirebaseAuth.instance.currentUser!.uid == widget.snap["uid"]
                     ? IconButton(
+                        //delete option
                         onPressed: () {
                           showDialog(
                             context: context,
@@ -181,7 +182,10 @@ class _PostCardState extends State<PostCard> {
                         ),
                       ),
                   icon: const Icon(Icons.comment)),
-              IconButton(onPressed: () {}, icon: const Icon(Icons.send)),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.send),
+              ),
               Expanded(
                 child: Container(),
               ),

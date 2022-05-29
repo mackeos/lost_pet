@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lost_pet/screens/profile_screen.dart';
+import 'package:lost_pet/utilities/colors.dart';
 import 'package:lost_pet/utilities/global_variables.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -32,7 +33,7 @@ class _SearchScreenState extends State<SearchScreen> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.blue[900],
+          backgroundColor: barColor,
           title: TextField(
             controller: _searchController,
             decoration: const InputDecoration(
@@ -188,8 +189,9 @@ class _SearchScreenState extends State<SearchScreen> {
                                       Text(
                                         snapshot.data.docs[index]
                                             .data()['description'],
-                                        style:
-                                            TextStyle(color: Colors.grey[300]),
+                                        style: const TextStyle(
+                                          color: secondaryColor,
+                                        ),
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 1,
                                         softWrap: true,

@@ -38,7 +38,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
             .collection('posts')
             .doc(widget.snap["postId"])
             .collection("comments")
-            .orderBy("dateCom", descending: false)
+            .orderBy("dateComment", descending: false)
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -74,7 +74,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
                   padding: const EdgeInsets.only(left: 15, right: 10),
                   child: TextField(
                     controller: _commentController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: "Write a comment...",
                     ),
@@ -85,7 +85,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
                 onTap: () async {
                   await FirestoreMethods().postComment(
                     widget.snap['postId'],
-                    _commentController.text,
+                    _commentController.text.trim(),
                     user.uid,
                     user.username,
                     user.profileImage,

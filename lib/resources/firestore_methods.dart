@@ -61,9 +61,7 @@ class FirestoreMethods {
           'commentId': commentId,
           'comment': comment,
           'uid': uid,
-          'username': username,
-          'profileImage': profileImage,
-          'dateCom': DateTime.now(),
+          'dateComment': DateTime.now(),
           'postId': postId,
         });
       } else {
@@ -167,16 +165,5 @@ class FirestoreMethods {
     }
 
     return res;
-  }
-
-  Future<String> getUsername(String uid) async {
-    String username = "";
-    await _firestore
-        .collection('users')
-        .doc(uid)
-        .get()
-        .then((value) => username = value.data()!['username']);
-
-    return username;
   }
 }

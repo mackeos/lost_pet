@@ -17,45 +17,30 @@ class FeedScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor:
             width > webScreenSize ? webBackgroundColor : mobileBackgroundColor,
-        appBar: width > webScreenSize
-            ? PreferredSize(
-                preferredSize: const Size.fromHeight(kToolbarHeight),
-                child: Container(
-                  color: Colors.blue[900],
-                  child: Column(
-                    children: <Widget>[
-                      Expanded(child: Container()),
-                      const TabBar(
-                        tabs: [
-                          Tab(
-                            text: "Lost Pets",
-                          ),
-                          Tab(
-                            text: "Found Pets",
-                          ),
-                        ],
-                      ),
-                    ],
+        appBar: AppBar(
+          backgroundColor: barColor,
+          title: width > webScreenSize
+              ? const Text(
+                  "Feed",
+                  style: TextStyle(
+                    color: Colors.white,
                   ),
-                ),
-              )
-            : AppBar(
-                backgroundColor: Colors.blue[900],
-                title: Image.asset(
+                )
+              : Image.asset(
                   "assets/pets-logo-white.png",
                   height: 30,
                 ),
-                bottom: const TabBar(
-                  tabs: [
-                    Tab(
-                      text: "Lost Pets",
-                    ),
-                    Tab(
-                      text: "Found Pets",
-                    ),
-                  ],
-                ),
+          bottom: const TabBar(
+            tabs: [
+              Tab(
+                text: "Lost Pets",
               ),
+              Tab(
+                text: "Found Pets",
+              ),
+            ],
+          ),
+        ),
         body: TabBarView(
           children: [
             StreamBuilder(

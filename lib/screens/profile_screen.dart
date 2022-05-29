@@ -249,8 +249,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 3,
-                              crossAxisSpacing: 5,
-                              mainAxisSpacing: 1.5,
+                              crossAxisSpacing: 2.5,
+                              mainAxisSpacing: 2.5,
                               childAspectRatio: 1,
                             ),
                             itemBuilder: (context, index) {

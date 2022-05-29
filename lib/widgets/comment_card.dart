@@ -40,7 +40,6 @@ class _CommentCardState extends State<CommentCard> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getData();
   }
@@ -49,7 +48,7 @@ class _CommentCardState extends State<CommentCard> {
   Widget build(BuildContext context) {
     return _isLoading
         ? const Center(
-            child: const CircularProgressIndicator(),
+            child: CircularProgressIndicator(),
           )
         : Container(
             padding: const EdgeInsets.symmetric(
@@ -103,8 +102,8 @@ class _CommentCardState extends State<CommentCard> {
                             Padding(
                               padding: const EdgeInsets.only(top: 5),
                               child: Text(
-                                DateFormat.yMMMd()
-                                    .format(widget.snap['dateCom'].toDate()),
+                                DateFormat.yMMMd().format(
+                                    widget.snap['dateComment'].toDate()),
                                 style: const TextStyle(
                                   color: primaryColor,
                                   fontSize: 12,
