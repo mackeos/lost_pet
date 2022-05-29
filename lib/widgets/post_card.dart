@@ -182,10 +182,6 @@ class _PostCardState extends State<PostCard> {
                         ),
                       ),
                   icon: const Icon(Icons.comment)),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.send),
-              ),
               Expanded(
                 child: Container(),
               ),
@@ -228,8 +224,9 @@ class _PostCardState extends State<PostCard> {
                           ),
                         ),
                         TextSpan(
-                          text: widget.snap['description'] ??
-                              "No description provided",
+                          text: widget.snap['description'] == ''
+                              ? "No description provided"
+                              : widget.snap['description'],
                         ),
                       ],
                     ),

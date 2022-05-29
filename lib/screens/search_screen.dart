@@ -179,19 +179,20 @@ class _SearchScreenState extends State<SearchScreen> {
                   children: <Widget>[
                     Expanded(
                       child: Container(
-                        padding: const EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(0),
                         decoration: BoxDecoration(
-                          color: barColor,
-                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: barColor,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(4),
                         ),
                         child: SizedBox(
-                          child: Container(
-                            width: double.infinity,
-                            height: double.infinity,
-                            child: Image.network(
-                              snapshot.data.docs[index].data()['postUrl'],
-                              fit: BoxFit.cover,
-                            ),
+                          width: double.infinity,
+                          height: double.infinity,
+                          child: Image.network(
+                            snapshot.data.docs[index].data()['postUrl'],
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),

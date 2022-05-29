@@ -70,12 +70,12 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   String? get _emailErrorText {
-    if (_usernameController.text.isEmpty) {
-      return 'Username is required';
+    if (_emailController.text.isEmpty) {
+      return 'Email is required';
     }
 
-    if (_usernameController.text.contains(' ')) {
-      return 'Username cannot contain spaces';
+    if (_emailController.text.contains(' ')) {
+      return 'email cannot contain spaces';
     }
 
     return null;
