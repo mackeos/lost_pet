@@ -213,11 +213,11 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  Container buildSignupColumn(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 32),
-      width: double.infinity,
-      child: SingleChildScrollView(
+  SingleChildScrollView buildSignupColumn(BuildContext context) {
+    return SingleChildScrollView(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 32),
+        width: double.infinity,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
