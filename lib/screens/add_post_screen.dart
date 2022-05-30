@@ -43,6 +43,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
   double lat = 35.33467469237791, long = 33.315482144275215;
   bool loading = false;
 
+  //backend stuff start
   void postImage(
     String uid,
     String username,
@@ -81,6 +82,13 @@ class _AddPostScreenState extends State<AddPostScreen> {
       showSnackBar(context, e.toString());
     }
   }
+
+  void clearImage() {
+    setState(() {
+      _imageTOUpload = null;
+    });
+  }
+  //backend stuff end
 
   void selectImage(context) async {
     return showDialog(
@@ -126,12 +134,6 @@ class _AddPostScreenState extends State<AddPostScreen> {
         );
       },
     );
-  }
-
-  void clearImage() {
-    setState(() {
-      _imageTOUpload = null;
-    });
   }
 
   void _onScaleStart(ScaleStartDetails details) {
@@ -186,7 +188,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
             child: IconButton(
               onPressed: (() => selectImage(context)),
               icon: const Icon(Icons.add),
-              color: Colors.white,
+              color: primaryColor,
             ),
           )
         : Scaffold(
@@ -207,7 +209,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   child: const Text(
                     'Post',
                     style: TextStyle(
-                      color: Colors.blueAccent,
+                      color: barColor,
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),
@@ -215,220 +217,212 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 ),
               ],
             ),
-            body: DefaultTabController(
-              length: 1,
-              child: TabBarView(children: [
-                Column(
+            body: Column(
+              children: [
+                _isLoading
+                    ? const LinearProgressIndicator(
+                        minHeight: 3.0,
+                      )
+                    : const SizedBox(
+                        height: 3.0,
+                      ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    _isLoading
-                        ? const LinearProgressIndicator(
-                            minHeight: 3.0,
-                          )
-                        : const SizedBox(
-                            height: 3.0,
-                          ),
-                    const SizedBox(
-                      height: 10,
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        user.profileImage,
+                      ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        CircleAvatar(
-                          backgroundImage: NetworkImage(
-                            user.profileImage,
+                    const Text(
+                      'Upload Type',
+                    ),
+                    ToggleButtons(
+                      borderColor: primaryColor,
+                      borderRadius: BorderRadius.circular(50),
+                      borderWidth: 1,
+                      selectedColor: blueColor,
+                      hoverColor: blueColor,
+                      fillColor: primaryColor,
+                      children: const [
+                        Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Text(
+                            'Lost',
                           ),
                         ),
-                        const Text(
-                          'Upload Type',
-                        ),
-                        ToggleButtons(
-                          borderColor: primaryColor,
-                          borderRadius: BorderRadius.circular(50),
-                          borderWidth: 1,
-                          selectedColor: blueColor,
-                          hoverColor: blueColor,
-                          fillColor: primaryColor,
-                          children: const [
-                            Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Text(
-                                'Lost',
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Text(
-                                'Found',
-                              ),
-                            ),
-                          ],
-                          isSelected: _uploadTypeToggle,
-                          onPressed: (int newIndex) {
-                            setState(() {
-                              for (int index = 0;
-                                  index < _uploadTypeToggle.length;
-                                  index++) {
-                                if (index == newIndex) {
-                                  _uploadTypeToggle[index] = true;
-                                } else {
-                                  _uploadTypeToggle[index] = false;
-                                }
-                              }
-                            });
-                          },
-                        ),
-                        SizedBox(
-                          height: 45,
-                          width: 45,
-                          child: AspectRatio(
-                            aspectRatio: 487 / 451,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: MemoryImage(
-                                      _imageTOUpload!,
-                                    ),
-                                    fit: BoxFit.fill,
-                                    alignment: FractionalOffset.topCenter),
-                              ),
-                            ),
+                        Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Text(
+                            'Found',
                           ),
-                        )
+                        ),
                       ],
+                      isSelected: _uploadTypeToggle,
+                      onPressed: (int newIndex) {
+                        setState(() {
+                          for (int index = 0;
+                              index < _uploadTypeToggle.length;
+                              index++) {
+                            if (index == newIndex) {
+                              _uploadTypeToggle[index] = true;
+                            } else {
+                              _uploadTypeToggle[index] = false;
+                            }
+                          }
+                        });
+                      },
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(20),
-                      child: TextField(
-                        controller: _descriptionController,
-                        decoration: const InputDecoration(
-                          hintText: 'Enter your post description',
-                          border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0)),
+                    SizedBox(
+                      height: 45,
+                      width: 45,
+                      child: AspectRatio(
+                        aspectRatio: 1,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: MemoryImage(
+                                  _imageTOUpload!,
+                                ),
+                                fit: BoxFit.fill,
+                                alignment: FractionalOffset.topCenter),
                           ),
                         ),
-                        maxLength: 150,
-                        maxLines: 3,
                       ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        child: Stack(
-                          children: [
-                            Align(
-                              alignment: Alignment.center,
-                              child: GestureDetector(
-                                onScaleStart: _onScaleStart,
-                                onScaleUpdate: _onScaleUpdate,
-                                onScaleEnd: _onScaleEnd,
-                                child: Map(
-                                  controller: _mapController,
-                                  builder: (context, x, y, z) {
-                                    final url =
-                                        'https://www.google.com/maps/vt/pb=!1m4!1m3!1i$z!2i$x!3i$y!2m3!1e0!2sm!3i420120488!3m7!2sen!5e1105!12m4!1e68!2m2!1sset!2sRoadmap!4e0!5m1!1e0!23i4111425';
-                                    return CachedNetworkImage(
-                                      imageUrl: url,
-                                      fit: BoxFit.cover,
-                                    );
-                                  },
-                                ),
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.bottomRight,
-                              child: Container(
-                                margin: const EdgeInsets.all(12),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    MaterialButton(
-                                        height: 50,
-                                        minWidth: 50,
-                                        color: Colors.blue,
-                                        child: const Icon(Icons.zoom_in,
-                                            color: Colors.white),
-                                        onPressed: () =>
-                                            _mapController.zoom += 0.2),
-                                    const SizedBox(height: 3),
-                                    MaterialButton(
-                                        height: 50,
-                                        minWidth: 50,
-                                        color: Colors.blue,
-                                        child: const Icon(Icons.zoom_out,
-                                            color: Colors.white),
-                                        onPressed: () =>
-                                            _mapController.zoom -= 0.2)
-                                  ],
-                                ),
-                              ),
-                            ),
-                            const Align(
-                              alignment: Alignment.center,
-                              child: Icon(
-                                Icons.location_on_outlined,
-                                size: 38,
-                                color: Colors.red,
-                              ),
-                            ),
-                            Positioned(
-                              bottom: 10,
-                              left: (MediaQuery.of(context).size.width * 0.5) -
-                                  (MediaQuery.of(context).size.width * 0.475),
-                              child: Card(
-                                elevation: 12,
-                                child: Container(
-                                  width: 300,
-                                  height: 75,
-                                  padding: const EdgeInsets.all(6),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      loading
-                                          ? const CircularProgressIndicator()
-                                          : Text(
-                                              'Lat: ${lat.toStringAsFixed(5)} , \nLong: ${long.toStringAsFixed(5)}')
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              top: 10,
-                              left: (MediaQuery.of(context).size.width * 0.5) -
-                                  75,
-                              child: InkWell(
-                                onTap: () {
-                                  print(lat);
-                                  print(long);
-                                  setState(() {
-                                    isLocationSaved = true;
-                                  });
-                                  print("Container clicked");
-                                },
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  width: 150,
-                                  padding: const EdgeInsets.all(10),
-                                  color: Colors.blue,
-                                  child: isLocationSaved
-                                      ? const Text(
-                                          "Location saved",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        )
-                                      : const Text('Set Location'),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    )
                   ],
                 ),
-              ]),
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  child: TextField(
+                    controller: _descriptionController,
+                    decoration: const InputDecoration(
+                      hintText: 'Enter your post description',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      ),
+                    ),
+                    maxLength: 150,
+                    maxLines: 3,
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    child: Stack(
+                      children: [
+                        Align(
+                          alignment: Alignment.center,
+                          child: GestureDetector(
+                            onScaleStart: _onScaleStart,
+                            onScaleUpdate: _onScaleUpdate,
+                            onScaleEnd: _onScaleEnd,
+                            child: Map(
+                              controller: _mapController,
+                              builder: (context, x, y, z) {
+                                final url =
+                                    'https://www.google.com/maps/vt/pb=!1m4!1m3!1i$z!2i$x!3i$y!2m3!1e0!2sm!3i420120488!3m7!2sen!5e1105!12m4!1e68!2m2!1sset!2sRoadmap!4e0!5m1!1e0!23i4111425';
+                                return CachedNetworkImage(
+                                  imageUrl: url,
+                                  fit: BoxFit.cover,
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: Container(
+                            margin: const EdgeInsets.all(12),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                MaterialButton(
+                                    height: 50,
+                                    minWidth: 50,
+                                    color: Colors.blue,
+                                    child: const Icon(Icons.zoom_in,
+                                        color: Colors.white),
+                                    onPressed: () =>
+                                        _mapController.zoom += 0.2),
+                                const SizedBox(height: 3),
+                                MaterialButton(
+                                    height: 50,
+                                    minWidth: 50,
+                                    color: Colors.blue,
+                                    child: const Icon(Icons.zoom_out,
+                                        color: Colors.white),
+                                    onPressed: () => _mapController.zoom -= 0.2)
+                              ],
+                            ),
+                          ),
+                        ),
+                        const Align(
+                          alignment: Alignment.center,
+                          child: Icon(
+                            Icons.location_on_outlined,
+                            size: 38,
+                            color: Colors.red,
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 10,
+                          left: (MediaQuery.of(context).size.width * 0.5) -
+                              (MediaQuery.of(context).size.width * 0.475),
+                          child: Card(
+                            elevation: 12,
+                            child: Container(
+                              width: 300,
+                              height: 75,
+                              padding: const EdgeInsets.all(6),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  loading
+                                      ? const CircularProgressIndicator()
+                                      : Text(
+                                          'Lat: ${lat.toStringAsFixed(5)} , \nLong: ${long.toStringAsFixed(5)}')
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          top: 10,
+                          left: (MediaQuery.of(context).size.width * 0.5) - 75,
+                          child: InkWell(
+                            onTap: () {
+                              print(lat);
+                              print(long);
+                              setState(() {
+                                isLocationSaved = true;
+                              });
+                              print("Container clicked");
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              width: 150,
+                              padding: const EdgeInsets.all(10),
+                              color: Colors.blue,
+                              child: isLocationSaved
+                                  ? const Text(
+                                      "Location saved",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    )
+                                  : const Text('Set Location'),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
           );
   }

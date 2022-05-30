@@ -33,6 +33,7 @@ class _ChatScreenState extends State<ChatScreen> {
     checkUser();
   }
 
+  //backend starts here
   void checkUser() async {
     String username = '';
     await FirebaseFirestore.instance
@@ -95,6 +96,7 @@ class _ChatScreenState extends State<ChatScreen> {
     }
     return Alignment.topLeft;
   }
+  //backend end
 
   @override
   Widget build(BuildContext context) {

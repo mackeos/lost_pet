@@ -37,7 +37,7 @@ class _SearchScreenState extends State<SearchScreen> {
           title: TextField(
             controller: _searchController,
             decoration: const InputDecoration(
-              labelText: "Search...",
+              labelText: "Search user...",
               prefixIcon: Icon(Icons.search),
             ),
             onChanged: (String value) {},

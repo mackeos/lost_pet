@@ -23,7 +23,6 @@ class PostCard extends StatefulWidget {
 class _PostCardState extends State<PostCard> {
   int commentLength = 0;
   bool _isExpanded = false;
-  bool _showPreview = false;
 
   @override
   void initState() {
@@ -144,18 +143,17 @@ class _PostCardState extends State<PostCard> {
           GestureDetector(
             onLongPress: () {
               setState(() {
-                _showPreview = true;
+                _isExpanded = true;
               });
             },
             onLongPressEnd: (details) {
               setState(() {
-                _showPreview = false;
+                _isExpanded = false;
               });
             },
             child: SizedBox(
-              height: _showPreview
-                  ? null
-                  : MediaQuery.of(context).size.height * 0.4,
+              height:
+                  _isExpanded ? null : MediaQuery.of(context).size.height * 0.4,
               width: double.infinity,
               child: Image(
                 image: NetworkImage(

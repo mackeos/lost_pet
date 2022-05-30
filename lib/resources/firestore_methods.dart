@@ -131,9 +131,12 @@ class FirestoreMethods {
   }) async {
     String res = "Something went wrong";
 
+    final snapShot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('username', isEqualTo: username)
+        .get();
+
     try {
-      /* String imageUrl = await StorageMethods()
-          .uploadImageToStorage('profile_images', profileImage, false); */
       _firestore.collection('users').doc(uid).update(
         {
           'username': username,
