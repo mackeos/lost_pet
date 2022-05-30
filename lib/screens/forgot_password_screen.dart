@@ -68,15 +68,15 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             ? Center(
                 child: AspectRatio(
                   aspectRatio: 0.6720430107526881,
-                  child: BuildColumn(context),
+                  child: buildColumn(context),
                 ),
               )
-            : BuildColumn(context),
+            : buildColumn(context),
       ),
     );
   }
 
-  Container BuildColumn(BuildContext context) {
+  Container buildColumn(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 32),
       width: double.infinity,
