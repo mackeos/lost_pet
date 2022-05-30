@@ -22,15 +22,12 @@ class _ChatsListScreenState extends State<ChatsListScreen> {
   @override
   void initState() {
     super.initState();
-/*     refreshChatsForCurrentUser(); */
   }
 
   @override
   void dispose() {
     super.dispose();
   }
-
-  dynamic a = [];
 
   @override
   Widget build(BuildContext context) {
@@ -61,10 +58,16 @@ class _ChatsListScreenState extends State<ChatsListScreen> {
                   Map<String, dynamic> data =
                       snapshot.data!.docs[index].data() as Map<String, dynamic>;
                   Map<String, dynamic> names = data['names'];
-                  String lastMsg = data['lastMsg'];
-                  dynamic lastTime = DateFormat('MMM d, h:mm a').format(
-                    data["lastTime"].toDate(),
-                  );
+                  String lastMsg = data['lastMsg'] ?? 'No messages yet';
+
+                  dynamic lastTime = data['lastMsg'] == null
+                      ? 'No messages yet'
+                      : DateFormat('MMM d, h:mm a').format(
+                          data["lastTime"].toDate(),
+                        );
+                  String lastSender = data['lastSender'] == null
+                      ? ''
+                      : names[data['lastSender']];
 
                   names.remove(currentUser);
                   return Center(
@@ -121,16 +124,13 @@ class _ChatsListScreenState extends State<ChatsListScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Expanded(
-                                            flex: 2,
-                                            child: Text(
-                                              lastMsg,
-                                              style: const TextStyle(
-                                                  color: primaryColor),
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 1,
-                                              softWrap: true,
-                                            ),
+                                          Text(
+                                            "$lastSender: $lastMsg",
+                                            style: const TextStyle(
+                                                color: primaryColor),
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
+                                            softWrap: true,
                                           ),
                                         ],
                                       ),
