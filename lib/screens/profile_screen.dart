@@ -8,7 +8,7 @@ import 'package:lost_pet/screens/edit_profile_screen.dart';
 import 'package:lost_pet/screens/login_screen.dart';
 import 'package:lost_pet/utilities/colors.dart';
 import 'package:lost_pet/utilities/global_variables.dart';
-import 'package:lost_pet/widgets/follow_button.dart';
+import 'package:lost_pet/widgets/dollow_button.dart';
 
 class ProfileScreen extends StatefulWidget {
   final String uid;
